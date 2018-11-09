@@ -1,6 +1,5 @@
 package net.iesseveroochoa.germanbeldamolina.practica5.practica5.modelo;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,16 +16,16 @@ import java.util.Date;
 public class DiarioDB {
     private final static int DB_VERSION = 1;
     private final static String DB_NOMBRE = "diario.db";
-    private final static String SQL_CREATE="CREATE TABLE IF NOT EXIST"+
+    private final static String SQL_CREATE="CREATE TABLE IF not exists "+
             DiaDiarioEntries.TABLE_NAME+" ("+
             DiaDiarioEntries.ID + " integer primary key autoincrement," +
             DiaDiarioEntries.FECHA+" TEXT UNIQUE NOT NULL, "+
             DiaDiarioEntries.VALORACION+" INTEGER NOT NULL,"+
             DiaDiarioEntries.RESUMEN+" TEXT NOT NULL,"+
             DiaDiarioEntries.CONTENIDO+" TEXT NOT NULL,"+
-            DiaDiarioEntries.FOTOURI+" TEXT NOT NULL,"+
-            DiaDiarioEntries.LATITUD+" TEXT NOT NULL,"+
-            DiaDiarioEntries.LONGITUD+" TEXT NOT NULL,";
+            DiaDiarioEntries.FOTOURI+" TEXT,"+
+            DiaDiarioEntries.LATITUD+" TEXT,"+
+            DiaDiarioEntries.LONGITUD+" TEXT)";
 
     private final static String SQL_DELETE_TABLE="DROP TABLE IF EXISTS "+DiaDiarioEntries.TABLE_NAME;
 
@@ -45,40 +44,27 @@ public class DiarioDB {
     }
     public void borraDia(DiaDiario dia){
         db.delete(DiaDiarioEntries.TABLE_NAME,"fecha="+fechaToFechaDB(dia.getFecha()),null);
-
     }
     public void anyadeActualizaDia(DiaDiario dia){
-        ContentValues registrodia = new ContentValues();
-        registrodia.put(DiaDiarioEntries.FECHA,fechaToFechaDB(dia.getFecha()));
-        registrodia.put(DiaDiarioEntries.VALORACION,dia.getValoracionDia());
-        registrodia.put(DiaDiarioEntries.RESUMEN,dia.getResumen());
-        registrodia.put(DiaDiarioEntries.CONTENIDO,dia.getContenido());
-
-        db.insert(DiaDiarioEntries.TABLE_NAME,null,registrodia);
+        open();
+        db.insert(DiaDiarioEntries.TABLE_NAME,null,dia.toContentValues());
+        close();
     }
     public Cursor obtenDiario(String ordenadoPor){
+        open();
         return db.query(DiaDiarioEntries.TABLE_NAME,null,null,null,null,null,ordenadoPor);
     }
     //PENDIENTE DE LOS MERLOS
     public int valoraVida(){
         return 0;
     }
-    public static DiaDiario cursorADiaDiario(Cursor c){
-        DiaDiario diaDiario;
-        diaDiario = new DiaDiario(fechaBDtoFecha(c.getString(c.getColumnIndex(DiaDiarioEntries.FECHA))),
-                c.getInt(c.getColumnIndex(DiaDiarioEntries.VALORACION)),
-                c.getString(c.getColumnIndex(DiaDiarioEntries.RESUMEN)),
-                c.getString(c.getColumnIndex(DiaDiarioEntries.CONTENIDO)));
-        return diaDiario;
-    }
+
     public void cargaDatosPrueba(){
-        anyadeActualizaDia(new DiaDiario(new Date(2008,3,2),9,"A","1"));
-        anyadeActualizaDia(new DiaDiario(new Date(2010,3,2),9,"A","1"));
-        anyadeActualizaDia(new DiaDiario(new Date(2021,3,3),9,"A","1"));
-        anyadeActualizaDia(new DiaDiario(new Date(2044,3,2),1,"A","1"));
-        anyadeActualizaDia(new DiaDiario(new Date(2045,3,5),9,"A","1"));
-        anyadeActualizaDia(new DiaDiario(new Date(2046,3,7),9,"A","1"));
-        anyadeActualizaDia(new DiaDiario(new Date(2047,3,22),9,"A","1"));
+        anyadeActualizaDia(new DiaDiario(DiarioDB.fechaBDtoFecha("2018-10-20"),9,"A","1"));
+        anyadeActualizaDia(new DiaDiario(DiarioDB.fechaBDtoFecha("2013-12-17"),9,"A","1"));
+        anyadeActualizaDia(new DiaDiario(DiarioDB.fechaBDtoFecha("2014-5-12"),9,"A","1"));
+        anyadeActualizaDia(new DiaDiario(DiarioDB.fechaBDtoFecha("2015-1-10"),1,"A","1"));
+
     }
 
     public static Date fechaBDtoFecha(String f){
@@ -108,7 +94,7 @@ public class DiarioDB {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-
+            db.execSQL(SQL_CREATE);
         }
 
         @Override

@@ -1,7 +1,12 @@
 package net.iesseveroochoa.germanbeldamolina.practica5.practica5.activities;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import net.iesseveroochoa.germanbeldamolina.practica5.practica5.modelo.DiarioContract;
+import net.iesseveroochoa.germanbeldamolina.practica5.practica5.modelo.DiarioDB;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -100,6 +105,29 @@ public class DiaDiario implements Parcelable {
 
     }
 
+    public static DiaDiario cursorADiaDiario(Cursor c){
+        DiaDiario diaDiario;
+        diaDiario = new DiaDiario(DiarioDB.fechaBDtoFecha(c.getString(c.getColumnIndex(DiarioContract.DiaDiarioEntries.FECHA))),
+                c.getInt(c.getColumnIndex(DiarioContract.DiaDiarioEntries.VALORACION)),
+                c.getString(c.getColumnIndex(DiarioContract.DiaDiarioEntries.RESUMEN)),
+                c.getString(c.getColumnIndex(DiarioContract.DiaDiarioEntries.CONTENIDO)));
+        return diaDiario;
+    }
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(DiarioContract.DiaDiarioEntries.FECHA, DiarioDB.fechaToFechaDB(getFecha()));
+        values.put(DiarioContract.DiaDiarioEntries.VALORACION, getValoracionDia());
+        values.put(DiarioContract.DiaDiarioEntries.RESUMEN, getResumen());
+        values.put(DiarioContract.DiaDiarioEntries.CONTENIDO, getContenido());
+        return values;
+    }
+
+    @Override
+    public String toString() {
+        return "DiaDiario: " + "fecha=" + DiarioDB.fechaToFechaDB(fecha) + "\n" +
+                "valoracion= " + valoracionDia + "resumen= " + resumen + "\n" +
+                "contenido= " + contenido + "\n";
+    }
 
     @Override
     public int describeContents() {

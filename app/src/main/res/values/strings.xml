@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Practica5</string>
+    <string name="add">añadir</string>
+    <string name="ordenar">ordenar</string>
+    <string name="borrar">borrar</string>
+    <string name="acerca_de">Acerca de...</string>
+    <string name="opciones">Opciones</string>
+    <string name="mostrar_desde_hasta">Mostrar desde hasta</string>
+    <string name="valorar_vida">Valorar vida</string>
 </resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/it_menu_add"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/add"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/it_borrar"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/borrar"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/it_ordenar"
+        android:icon="@android:drawable/ic_menu_sort_alphabetically"
+        android:title="@string/ordenar"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/it_valorarvida"
+        android:icon="@android:drawable/ic_menu_sort_alphabetically"
+        android:title="@string/valorar_vida"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/it_desdehasta"
+        android:icon="@android:drawable/ic_menu_sort_alphabetically"
+        android:title="@string/mostrar_desde_hasta"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/it_opciones"
+        android:icon="@android:drawable/ic_menu_sort_alphabetically"
+        android:title="@string/opciones"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/it_acercade"
+        android:icon="@android:drawable/ic_menu_sort_alphabetically"
+        android:title="@string/acerca_de"
+        app:showAsAction="never" />
+</menu>
