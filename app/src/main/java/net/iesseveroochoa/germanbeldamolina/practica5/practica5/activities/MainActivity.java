@@ -1,7 +1,9 @@
 package net.iesseveroochoa.germanbeldamolina.practica5.practica5.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,21 +24,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tv_diario = findViewById(R.id.tvPrincipal);
-
         diario= new DiarioDB(MainActivity.this);
-        //diario.cargaDatosPrueba();
-        Cursor c = diario.obtenDiario(DiarioContract.DiaDiarioEntries.FECHA);
-        DiaDiario dia;
-        tv_diario.setText("");//limpiamos el campo de texto
-        //Nos aseguramos de que existe al menos un registro
-        if (c.moveToFirst()) {
-        //Recorremos el cursor hasta que no haya más registros
-        do {
-        dia=DiaDiario.cursorADiaDiario(c);
-        //podéis sobrecargar toString en DiaDiario para mostrar los datos
-        tv_diario.append(dia.toString());
-        } while(c.moveToNext());
-        }
+        diario.cargaDatosPrueba();
+        mostrarDatos();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,27 +43,36 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent_menu);
                 return true;
             case R.id.it_ordenar:
-                //TODO implement
+                alerdDialogLista();
                 return true;
             case R.id.it_borrar:
-                /*Cursor c = diario.obtenDiario(DiarioContract.DiaDiarioEntries.FECHA);
+                Cursor c = diario.obtenDiario(DiarioContract.DiaDiarioEntries.FECHA);
                 c.moveToFirst();
-                diario.borraDia(DiaDiario.cursorADiaDiario(c));
-                c = diario.obtenDiario(DiarioContract.DiaDiarioEntries.FECHA);
-                DiaDiario dia;
-                tv_diario.setText("");//limpiamos el campo de texto
-                //Nos aseguramos de que existe al menos un registro
-                if (c.moveToFirst()) {
-                    //Recorremos el cursor hasta que no haya más registros
-                    do {
-                        dia=DiaDiario.cursorADiaDiario(c);
-                        //podéis sobrecargar toString en DiaDiario para mostrar los datos
-                        tv_diario.append(dia.toString());
-                    } while(c.moveToNext());
-                }*/
+                DiaDiario borrar = new DiaDiario(DiarioDB.fechaBDtoFecha(c.getString(1)),c.getInt(2),c.getString(3),c.getString(4));
+                diario.borraDia(borrar);
+                mostrarDatos();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void alerdDialogLista(){
+        DialogoSeleccion lista = new DialogoSeleccion();
+        lista.show(getSupportFragmentManager(),"lista");
+    }
+    public void mostrarDatos(){
+        Cursor c = diario.obtenDiario(DiarioContract.DiaDiarioEntries.FECHA);
+        DiaDiario dia;
+        tv_diario.setText("");//limpiamos el campo de texto
+        //Nos aseguramos de que existe al menos un registro
+        if (c.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                dia=DiaDiario.cursorADiaDiario(c);
+                //podéis sobrecargar toString en DiaDiario para mostrar los datos
+                tv_diario.append(dia.toString());
+            } while(c.moveToNext());
+        }
     }
 
 }

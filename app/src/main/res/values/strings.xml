@@ -7,4 +7,5 @@
     <string name="opciones">Opciones</string>
     <string name="mostrar_desde_hasta">Mostrar desde hasta</string>
     <string name="valorar_vida">Valorar vida</string>
+    <string name="ordenarpor">Ordenar por</string>
 </resources>

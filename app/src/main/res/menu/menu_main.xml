@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/it_menu_add"
         android:icon="@android:drawable/ic_menu_add"
@@ -37,4 +36,5 @@
         android:icon="@android:drawable/ic_menu_sort_alphabetically"
         android:title="@string/acerca_de"
         app:showAsAction="never" />
+
 </menu>

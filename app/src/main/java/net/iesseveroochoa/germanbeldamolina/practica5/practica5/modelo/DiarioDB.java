@@ -43,7 +43,9 @@ public class DiarioDB {
         db.close();
     }
     public void borraDia(DiaDiario dia){
-        db.delete(DiaDiarioEntries.TABLE_NAME,"fecha="+fechaToFechaDB(dia.getFecha()),null);
+        open();
+        db.delete(DiaDiarioEntries.TABLE_NAME,"fecha ='"+fechaToFechaDB(dia.getFecha())+"'",null);
+        close();
     }
     public void anyadeActualizaDia(DiaDiario dia){
         open();
