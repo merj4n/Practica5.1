@@ -66,7 +66,6 @@ public class DiarioDB {
         anyadeActualizaDia(new DiaDiario(DiarioDB.fechaBDtoFecha("2013-12-17"),9,"A","1"));
         anyadeActualizaDia(new DiaDiario(DiarioDB.fechaBDtoFecha("2014-5-12"),9,"A","1"));
         anyadeActualizaDia(new DiaDiario(DiarioDB.fechaBDtoFecha("2015-1-10"),1,"A","1"));
-
     }
 
     public static Date fechaBDtoFecha(String f){

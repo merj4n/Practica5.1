@@ -1,9 +1,7 @@
 package net.iesseveroochoa.germanbeldamolina.practica5.practica5.activities;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +14,15 @@ import net.iesseveroochoa.germanbeldamolina.practica5.practica5.modelo.DiarioDB;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv_diario;
+
+    public DiarioDB getDiario() {
+        return diario;
+    }
+
+    public void setDiario(DiarioDB diario) {
+        this.diario = diario;
+    }
+
     private DiarioDB diario;
 
     @Override
@@ -59,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     public void alerdDialogLista(){
         DialogoSeleccion lista = new DialogoSeleccion();
         lista.show(getSupportFragmentManager(),"lista");
+
     }
     public void mostrarDatos(){
         Cursor c = diario.obtenDiario(DiarioContract.DiaDiarioEntries.FECHA);
