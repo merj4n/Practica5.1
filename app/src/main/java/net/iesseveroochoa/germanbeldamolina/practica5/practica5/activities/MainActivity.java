@@ -14,15 +14,6 @@ import net.iesseveroochoa.germanbeldamolina.practica5.practica5.modelo.DiarioDB;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv_diario;
-
-    public DiarioDB getDiario() {
-        return diario;
-    }
-
-    public void setDiario(DiarioDB diario) {
-        this.diario = diario;
-    }
-
     private DiarioDB diario;
 
     @Override
