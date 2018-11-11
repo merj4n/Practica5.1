@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/sp_valorarvida"
+        android:id="@+id/spn_valorarvida"
         android:layout_width="276dp"
         android:layout_height="22dp"
         android:layout_marginStart="8dp"
@@ -78,7 +78,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sp_valorarvida" />
+        app:layout_constraintTop_toBottomOf="@+id/spn_valorarvida" />
 
     <Button
         android:id="@+id/bt_calendario"
@@ -93,7 +93,7 @@
         android:gravity="center"
         android:padding="8dp"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/sp_valorarvida"
+        app:layout_constraintBottom_toTopOf="@+id/spn_valorarvida"
         app:layout_constraintStart_toEndOf="@+id/tv_fecha"
         app:layout_constraintTop_toTopOf="parent" />
 
