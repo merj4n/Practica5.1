@@ -1,11 +1,9 @@
 package net.iesseveroochoa.germanbeldamolina.practica5.practica5.activities;
 
-import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -31,6 +29,7 @@ public class EdicionDiaActivity extends AppCompatActivity {
         tv_fecha = findViewById(R.id.tv_fecha);
         et_resumendia = findViewById(R.id.et_resumendia);
         et_cuentadia = findViewById(R.id.et_cuentadia);
+        spn_valoracion.setSelection(5);
 
 
     }
