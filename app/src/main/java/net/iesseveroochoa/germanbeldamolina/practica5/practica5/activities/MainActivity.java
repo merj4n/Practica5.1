@@ -17,6 +17,9 @@ import net.iesseveroochoa.germanbeldamolina.practica5.practica5.R;
 import net.iesseveroochoa.germanbeldamolina.practica5.practica5.modelo.DiarioContract;
 import net.iesseveroochoa.germanbeldamolina.practica5.practica5.modelo.DiarioDB;
 
+/**
+ * Clase Principal encargada de mostrar los datos de la base de datos de dias.
+ */
 public class MainActivity extends AppCompatActivity {
     private static TextView tv_diario;
     private static DiarioDB diario;
@@ -33,12 +36,24 @@ public class MainActivity extends AppCompatActivity {
         mostrarDatos(ordenacionActual);
 
     }
+
+    /**
+     * Metodo de creacion de del menu, llamamos al selector de opcion y ejecutamos los metodos
+     * necesarios en cada una de las opciones.
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Metodo en el que seleccionamos la opcion y la ejecutamos segun lo que nos pida.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -61,11 +76,19 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Metodo que crea un alertDialog que nos mostrara la lista contenida en el arrays.xml
+     */
     public void alerdDialogLista(){
         DialogoSeleccion lista = new DialogoSeleccion();
         lista.show(getSupportFragmentManager(),"lista");
 
     }
+
+    /**
+     * Metodo que se emplea para mostrar los datos en la actividad principal
+     * @param ordenadoPor
+     */
     public static void mostrarDatos(String ordenadoPor){
         Cursor c = diario.obtenDiario(ordenadoPor);
         DiaDiario dia;
@@ -81,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Clase interna que llama al dialogo que nos da las opciones de ordenación.
+     */
     public static class DialogoSeleccion extends DialogFragment {
 
         @Override
@@ -105,6 +131,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Este metodo nos permite agregar un nuevo dia a la base de datos y muestra el resultado segun
+     * la ultima ordenacion que hayamos marcado.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
