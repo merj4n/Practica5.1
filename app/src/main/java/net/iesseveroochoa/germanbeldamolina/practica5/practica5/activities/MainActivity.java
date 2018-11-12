@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +14,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import net.iesseveroochoa.germanbeldamolina.practica5.practica5.R;
+import net.iesseveroochoa.germanbeldamolina.practica5.practica5.modelo.DiarioContract;
 import net.iesseveroochoa.germanbeldamolina.practica5.practica5.modelo.DiarioDB;
 
 public class MainActivity extends AppCompatActivity {
     private static TextView tv_diario;
     private static DiarioDB diario;
-    private static String ordenacionActual="fecha";
+    private static String ordenacionActual=DiarioContract.DiaDiarioEntries.FECHA;
+    private final static int OPTION_REQUEST_ANYADIR =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         tv_diario = findViewById(R.id.tvPrincipal);
         diario= new DiarioDB(MainActivity.this);
         diario.cargaDatosPrueba();
-        mostrarDatos("fecha");
+        mostrarDatos(ordenacionActual);
 
     }
     @Override
@@ -41,17 +44,18 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.it_menu_add:
                 Intent intent_menu = new Intent(this,EdicionDiaActivity.class);
-                startActivity(intent_menu);
+                startActivityForResult(intent_menu, OPTION_REQUEST_ANYADIR);
                 return true;
             case R.id.it_ordenar:
                 alerdDialogLista();
                 return true;
             case R.id.it_borrar:
                 Cursor c = diario.obtenDiario(ordenacionActual);
-                c.moveToFirst();
-                DiaDiario borrar = new DiaDiario(DiarioDB.fechaBDtoFecha(c.getString(1)),c.getInt(2),c.getString(3),c.getString(4));
-                diario.borraDia(borrar);
-                mostrarDatos(ordenacionActual);
+                if(c.moveToNext()){
+                    DiaDiario borrar = new DiaDiario(DiarioDB.fechaBDtoFecha(c.getString(1)),c.getInt(2),c.getString(3),c.getString(4));
+                    diario.borraDia(borrar);
+                    mostrarDatos(ordenacionActual);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -86,14 +90,14 @@ public class MainActivity extends AppCompatActivity {
             builder.setTitle(R.string.ordenarpor).setItems(R.array.lista, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int item) {
                     if (item==0){
-                        mostrarDatos("fecha");
-                        ordenacionActual="fecha";
+                        mostrarDatos(DiarioContract.DiaDiarioEntries.FECHA);
+                        ordenacionActual=DiarioContract.DiaDiarioEntries.FECHA;
                     }else if(item==1){
-                        mostrarDatos("valoracion");
-                        ordenacionActual="valoracion";
+                        mostrarDatos(DiarioContract.DiaDiarioEntries.VALORACION);
+                        ordenacionActual=DiarioContract.DiaDiarioEntries.VALORACION;
                     }else {
-                        mostrarDatos("resumen");
-                        ordenacionActual="resumen";
+                        mostrarDatos(DiarioContract.DiaDiarioEntries.RESUMEN);
+                        ordenacionActual=DiarioContract.DiaDiarioEntries.RESUMEN;
                     }
                 }
             });
@@ -101,4 +105,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK){
+            DiaDiario nuevoDia= data.getParcelableExtra(EdicionDiaActivity.EXTRA_DIA);
+            diario.anyadeActualizaDia(nuevoDia);
+            mostrarDatos(ordenacionActual);
+        }
+    }
 }

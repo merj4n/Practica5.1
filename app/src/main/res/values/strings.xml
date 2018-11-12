@@ -8,4 +8,7 @@
     <string name="mostrar_desde_hasta">Mostrar desde hasta</string>
     <string name="valorar_vida">Valorar vida</string>
     <string name="ordenarpor">Ordenar por</string>
+    <string name="aviso">AVISO</string>
+    <string name="mensaje_aviso">Es necesario rellenar todos los campos</string>
+    <string name="fecha">fecha</string>
 </resources>

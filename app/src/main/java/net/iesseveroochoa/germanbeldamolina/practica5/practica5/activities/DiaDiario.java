@@ -124,9 +124,7 @@ public class DiaDiario implements Parcelable {
 
     @Override
     public String toString() {
-        return "Fecha= " + DiarioDB.fechaToFechaDB(fecha) + "\n" +
-                "Valoracion= " + valoracionDia + " Resumen= " + resumen + "\n" +
-                "Contenido= " + contenido + "\n";
+        return "Valoracion= " + valoracionDia + " Fecha= " + DiarioDB.fechaToFechaDB(fecha) + " Resumen= " + resumen + "\n";
     }
 
     @Override
